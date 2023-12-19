@@ -28,7 +28,19 @@ public class HelperUser extends HelperBase {
     public void clickOKButton() {
         click(By.xpath("//button[text()='Ok']"));
     }
-//    public boolean isLogged() {
-//        return isElementPresent(By.xpath("//button[text()='Ok']"));
-//    }
+
+    public boolean isLogged() {
+        return isElementPresent(By.xpath("//button[text()='Ok']"));
+    }
+    private boolean isElementPresent(By locator) {
+        try {
+            wd.findElement(locator);
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+    public void logout() {
+        click(By.xpath("//a[contains(text(),'Logout')]"));
+    }
 }
