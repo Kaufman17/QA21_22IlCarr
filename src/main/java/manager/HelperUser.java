@@ -8,20 +8,27 @@ public class HelperUser extends HelperBase {
         super(wd);
     }
 
-    public void openLoginRegistrationForm(){
-        click(By.cssSelector("a.navigation-link[ng-reflect-router-link='login']"));
+    public void openLoginForm() {
+        // click(By.cssSelector("a.navigation-link[ng-reflect-router-link='login']"));
+        click(By.xpath("//a[text()=' Log in ']"));
     }
 
-    public void fillLoginRegistrationForm(String email, String password) {
-        type(By.id("email"),email);
-        type(By.cssSelector("[ng-reflect-name='password']"), password);
+    public void fillLoginForm(String email, String password) {
+        type(By.id("email"), email);
+        type(By.id("password"), password);
+        // type(By.cssSelector("[ng-reflect-name='password']"), password);
     }
 
-    public void submitLogin(){
-        click(By.cssSelector("button[type='submit']"));
+    public void submitLogin() {
+
+        wd.findElement(By.xpath("//button[@type='submit']"))
+                .click();
     }
 
-    public boolean isLogged() {
-        return isElementPresent(By.xpath("//button[text()='Ok']"));
+    public void clickOKButton() {
+        click(By.xpath("//button[text()='Ok']"));
     }
+//    public boolean isLogged() {
+//        return isElementPresent(By.xpath("//button[text()='Ok']"));
+//    }
 }
