@@ -1,21 +1,19 @@
 package manager;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import java.time.temporal.WeekFields;
 import java.util.List;
+
+
 
 public class HelperBase {
     WebDriver wd;
 
     public HelperBase(WebDriver wd) {
-
         this.wd = wd;
     }
     public void click(By locator) {
-        //  WebElement element = wd.findElement(locator);
-        // element.click();
         wd.findElement(locator).click();
     }
     public void type(By locator, String text) {
@@ -26,16 +24,14 @@ public class HelperBase {
             element.sendKeys(text);
         }
     }
-
     public String getMessage() {
-
-    //  WebElement el = wd.findElement(By.cssSelector(".dialog-container>h2"));
-    //  String text = el.getText();
-    //  return text;
-    //pause(5000);
-    // pause(8000);
+//        WebElement el = wd.findElement(By.cssSelector(".dialog-container>h2"));
+//        String text = el.getText();
+//        return text;
+        //pause(5000);
         return
-                wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+                wd.findElement(By.cssSelector(".dialog-container>h2"))
+                        .getText();
     }
     public void pause(int time){
         try {
@@ -43,5 +39,19 @@ public class HelperBase {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+    boolean isElementPresent(By locator) {
+        //return wd.findElements(locator).size()>0;
+        List<WebElement> list = wd.findElements(locator);
+        return list.size() > 0;
+
+    }
+
+    public boolean isYallaButtonNotActive() {
+        boolean res= isElementPresent(By.cssSelector("button[disabled]"));
+
+        WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
+        boolean result = element.isEnabled();
+        return res && !result;
     }
 }
