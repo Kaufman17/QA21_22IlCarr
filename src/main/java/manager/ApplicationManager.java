@@ -18,6 +18,7 @@ public class ApplicationManager {
         helperUser = new HelperUser(wd);
         helperCar = new HelperCar(wd);
     }
+
     public HelperUser getHelperUser() {
 
         return helperUser;
@@ -29,5 +30,6 @@ public class ApplicationManager {
 
     public void stop() {
         wd.quit();
+
     }
 }
