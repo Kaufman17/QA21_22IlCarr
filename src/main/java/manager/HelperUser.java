@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class HelperUser extends HelperBase {
@@ -52,6 +54,7 @@ public class HelperUser extends HelperBase {
     }
 
     /////**********************Registration************************
+
     public void openRegistrationForm() {
         click(By.xpath("//a[text()=' Sign up ']"));
     }
@@ -69,12 +72,12 @@ public class HelperUser extends HelperBase {
         //click(By.cssSelector("label[for ='terms-of-use']"));
 
         //variant 2
-//        JavascriptExecutor js = (JavascriptExecutor) wd;
-//        js.executeScript("document.querySelector('#terms-of-use').click();");
+        //JavascriptExecutor js = (JavascriptExecutor) wd;
+        //js.executeScript("document.querySelector('#terms-of-use').click();");
 
     }
 
-    public void checkPolicyXY(){
+    public void checkPolicyXY() {
 
         Dimension size = wd.manage().window().getSize();
         System.out.println("Wigh screen--> " + size.getWidth());
@@ -82,12 +85,13 @@ public class HelperUser extends HelperBase {
         WebElement label = wd.findElement(By.cssSelector("label[for ='terms-of-use']"));
         Rectangle rect = label.getRect();
         int w = rect.getWidth();
-        int xOffSet = -w/2;
+        int xOffSet = -w / 2;
         Actions actions = new Actions(wd);
-        actions.moveToElement(label,xOffSet,0).click().release().perform();
+        actions.moveToElement(label, xOffSet, 0).click().release().perform();
 
 
     }
+
     public void login(User user) {
         openLoginForm();
         fillLoginForm(user);

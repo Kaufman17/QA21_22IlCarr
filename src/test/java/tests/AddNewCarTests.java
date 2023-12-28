@@ -4,6 +4,7 @@ package tests;
 
 import models.Car;
 import models.User;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -39,6 +40,7 @@ public class AddNewCarTests extends TestBase{
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
         app.getHelperCar().submit();
+     //   Assert.assertTrue(app.getHelperCar().getMessage(), "Car registration was not successful");
     }
 
 
