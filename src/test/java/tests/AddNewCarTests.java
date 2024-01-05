@@ -20,7 +20,7 @@ public class AddNewCarTests extends TestBase {
 
     @Test
     public void addNewCarSuccessAll() {
-        int i = new Random().nextInt(1000) + 1000;
+        int i = new Random().nextInt(10000) + 1000;
         Car car = Car.builder()
                 .location("Tel Aviv, Israel")
                 .manufacture("Mazda")
@@ -29,15 +29,21 @@ public class AddNewCarTests extends TestBase {
                 .fuel("Petrol")
                 .seats(4)
                 .carClass("C")
-                .carRegNumber("678-900-" + i)
+               // .carRegNumber("678-900-" + i)
+                .carRegNumber("678-900-"+i+"1")
                 .price(50)
                 .about("Very nice car")
                 .build();
 
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
+        app.getHelperCar().attachPhoto("C:\\Users\\Public\\QA21_22\\QA21_22IlCarr\\imgpsh_fullsize_anim.jpeg");
         app.getHelperCar().submit();
-        Assert.assertTrue(app.getHelperCar().getMessage().contains(" added successful"));
+       // Assert.assertTrue(app.getHelperCar().getMessage().contains(" added successful"));
+        Assert.assertTrue(app.getHelperUser().getMessage().contains("added successful"));
+        Assert.assertEquals(app.getHelperUser().getMessage(), car.getManufacture()
+                + " "+car.getModel()
+                + " added successful");
     }
 
 
@@ -60,15 +66,23 @@ public class AddNewCarTests extends TestBase {
         app.getHelperCar().fillCarForm(car);
         app.getHelperCar().submit();
         String expectedMessage = (car.getManufacture() + " " + car.getModel() + " added successful").trim();
-        Assert.assertEquals(app.getHelperCar().getMessage().trim(), expectedMessage);
-
+       // Assert.assertEquals(app.getHelperCar().getMessage().trim(), expectedMessage);
+        Assert.assertTrue(app.getHelperUser().getMessage().contains("added successful"));
+        Assert.assertEquals(app.getHelperUser().getMessage(), car.getManufacture()
+                + " "+car.getModel()
+                + " added successful");
     }
 
     @AfterMethod
-    public void postConditions() {
-    app.getHelperUser().clickOKButton();
-    app.stop();
-     }
+//    public void postConditions() {
+//    app.getHelperUser().clickOKButton();
+//    app.stop();
+//}
+        public void postCondition(){
+            app.getHelperCar().returnToHome();
+        }
+
+
 
     }
 
