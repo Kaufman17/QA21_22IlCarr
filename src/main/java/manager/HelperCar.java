@@ -5,8 +5,11 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+
+import static com.sun.corba.se.impl.orbutil.CorbaResourceUtil.getText;
 
 
 public class HelperCar extends HelperBase {
@@ -92,7 +95,7 @@ public class HelperCar extends HelperBase {
         int day = now.getDayOfMonth();
         LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
         LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
-//LocalDate from1 = LocalDate.parse("2013:23/05", DateTimeFormatter.ofPattern("yyyy:dd/MM"));
+        //LocalDate from1 = LocalDate.parse("2013:23/05", DateTimeFormatter.ofPattern("yyyy:dd/MM"));
         //System.out.println(from1);
 
         int diffMonth = from.getMonthValue() - month;
@@ -110,7 +113,7 @@ public class HelperCar extends HelperBase {
         }
 
 
-    //"//div[text() = ' " + from[1] + " ']";
+        //"//div[text() = ' " + from[1] + " ']";
         String locator = String.format("//div[text() = ' %s ']", to.getDayOfMonth());
         click(By.xpath(locator));
     }
@@ -121,43 +124,59 @@ public class HelperCar extends HelperBase {
 
         }
     }
+//********************* HW **************************
 
-
+//    public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+//        typeCity(city);
+//        click(By.id("dates"));
+//
+//        LocalDate now = LocalDate.now();
+//        int currentYear = now.getYear();
+//        int currentMonth = now.getMonthValue();
+//        int currentDay = now.getDayOfMonth();
+//
+//        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+//        LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
+//
+//        int diffYear = to.getYear() - from.getYear();
+//        int diffMonth = to.getMonthValue() - from.getMonthValue();
+//
+//
+//        if (diffYear > 0 || diffMonth > 0) {
+//            int totalMonths = diffYear * 12 + diffMonth;
+//            clickNextMonth(totalMonths);
+//        }
+//
+//
+//        int diffMonthFrom = from.getMonthValue() - currentMonth;
+//        if (diffMonthFrom > 0) {
+//            clickNextMonth(diffMonthFrom);
+//        }
+//        click(By.xpath("//div[text() = ' " + from.getDayOfMonth() + " ']"));
+//
+//
+//        int diffMonthTo = to.getMonthValue() - from.getMonthValue();
+//        String locator = String.format("//div[text() = ' %s ']", to.getDayOfMonth());
+//        click(By.xpath(locator));
+//    }
     public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
         typeCity(city);
         click(By.id("dates"));
 
-        LocalDate now = LocalDate.now();
-        int currentYear = now.getYear();
-        int currentMonth = now.getMonthValue();
-        int currentDay = now.getDayOfMonth();
-
         LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
         LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
 
-        int diffYear = to.getYear() - from.getYear();
-        int diffMonth = to.getMonthValue() - from.getMonthValue();
-
-
-        if (diffYear > 0 || diffMonth > 0) {
-            int totalMonths = diffYear * 12 + diffMonth;
-            clickNextMonth(totalMonths);
-        }
-
-
-        int diffMonthFrom = from.getMonthValue() - currentMonth;
-        if (diffMonthFrom > 0) {
-            clickNextMonth(diffMonthFrom);
-        }
-        click(By.xpath("//div[text() = ' " + from.getDayOfMonth() + " ']"));
-
-
-        int diffMonthTo = to.getMonthValue() - from.getMonthValue();
-        String locator = String.format("//div[text() = ' %s ']", to.getDayOfMonth());
-        click(By.xpath(locator));
+        selectDate(from);
+        selectDate(to);
     }
 
-
+    private void selectDate(LocalDate date) {
+        int diffMonths = (int) Period.between(LocalDate.now(), date).toTotalMonths();
+        for (int i = 0; i < diffMonths; i++) {
+            click(By.cssSelector("button[aria-label ='Next month']"));
+        }
+        click(By.xpath("//div[text() = ' " + date.getDayOfMonth() + " ']"));
+    }
 }
 
 

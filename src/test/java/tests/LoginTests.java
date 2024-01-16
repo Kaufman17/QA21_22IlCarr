@@ -31,6 +31,7 @@ public class LoginTests extends TestBase {
 //        user1.setEmail();
 //        user.setEmail("chara@gmail.com");
 //        user.setPassword("Chara12345$");
+        logger.info("Test start with test data --->" + user.toString());
 
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm(user);

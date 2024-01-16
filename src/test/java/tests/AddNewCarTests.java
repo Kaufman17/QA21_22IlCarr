@@ -34,7 +34,7 @@ public class AddNewCarTests extends TestBase {
                 .price(50)
                 .about("Very nice car")
                 .build();
-
+        logger.info("Test start with test data --->" + car.toString());
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
         app.getHelperCar().attachPhoto("C:\\Users\\Public\\QA21_22\\QA21_22IlCarr\\imgpsh_fullsize_anim.jpeg");
