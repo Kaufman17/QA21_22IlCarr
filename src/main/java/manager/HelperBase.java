@@ -1,16 +1,22 @@
 package manager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.time.temporal.WeekFields;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.io.IOException;
+
 import java.util.List;
 
 
 public class HelperBase {
     WebDriver wd;
+    Logger logger = LoggerFactory.getLogger(HelperBase.class);
 
     public HelperBase(WebDriver wd) {
         this.wd = wd;
@@ -41,6 +47,7 @@ public class HelperBase {
         wd.findElement(By.xpath("//button[@type='submit']"))
                 .click();
     }
+
 
     public String getMessage() {
 //        WebElement el = wd.findElement(By.cssSelector(".dialog-container>h2"));
@@ -73,6 +80,15 @@ public class HelperBase {
         WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
         boolean result = element.isEnabled();
         return res && !result;
+    }
+    public void getScreen(String link) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) wd;
+        File tmp = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        try {
+            Files.copy(tmp,new File(link));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
