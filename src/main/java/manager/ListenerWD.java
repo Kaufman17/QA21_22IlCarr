@@ -11,7 +11,7 @@ public class ListenerWD extends AbstractWebDriverEventListener{
     @Override
     public void onException(Throwable throwable, WebDriver driver) {
         super.onException(throwable, driver);
-        logger.info("Huston we have a problem!");
+        logger.info("We have PROBLEMS!");
         logger.info(throwable.getMessage());
         logger.info(throwable.fillInStackTrace().toString());
         int i = (int)(System.currentTimeMillis()/1000%3600);
