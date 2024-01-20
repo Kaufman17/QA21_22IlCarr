@@ -12,7 +12,7 @@ public class SearchCarTests extends TestBase {
     @Test
     public void searchCurrentMonthSuccess() {
         int i = new Random().nextInt(10000) + 1000;
-        app.getHelperCar().searchCurrentMonth("Tel Aviv, Israel", "1/17/2024", "1/23/2024");
+        app.getHelperCar().searchCurrentMonth("Tel Aviv, Israel", "1/31/2024", "1/23/2024");
         //app.getHelperCar().searchAnyPeriod("Tel Aviv, Israel", "1/15/2024", "1/23/2024");
         app.getHelperCar().getScreen("src/test/screenshots/currentMonth.png");
         app.getHelperCar().submit();
@@ -33,13 +33,23 @@ public class SearchCarTests extends TestBase {
 
     @Test
     public void searchAnyPeriodSuccess() {
-        int i = new Random().nextInt(10000) + 1000;
 
         app.getHelperCar().searchAnyPeriod("Tel Aviv, Israel", "12/31/2024", "1/13/2025");
         app.getHelperCar().submit();
 
         app.getHelperCar().getScreen("src/test/screenshots/any.png");
         Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
+
+    }
+
+    @Test
+    public void AnyPeriodNegative() {
+
+        app.getHelperCar().negativeAnyPeriod("Tel Aviv, Israel", "12/31/2024", "2/13/2025");
+        app.getHelperCar().submit();
+        app.getHelperCar().getScreen("src/test/screenshots/anyNeg.png");
+       Assert.assertEquals(app.getHelperCar().getErrorText(), "You can't pick date after one year");
+       Assert.assertTrue(app.getHelperCar().isYallaButtonNotActive());
 
     }
 

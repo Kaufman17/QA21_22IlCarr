@@ -2,7 +2,9 @@ package manager;
 
 import models.Car;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -110,7 +112,7 @@ public class HelperCar extends HelperBase {
 
         click(By.xpath("//div[text() = ' " + from.getDayOfMonth() + " ']"));
 
-        diffMonth = to.getMonthValue()-from.getMonthValue();
+        diffMonth = to.getMonthValue() - from.getMonthValue();
 
         if (diffMonth > 0) {
             clickNextMonth(diffMonth);
@@ -148,7 +150,7 @@ public class HelperCar extends HelperBase {
 //        }
 //        click(By.xpath("//div[text() = ' " + date.getDayOfMonth() + " ']"));
 //    }
-   //**************CW  searchAnyPeriod ***********
+    //**************CW  searchAnyPeriod ***********
 
     public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
         clearTextBox(By.id("city"));
@@ -156,26 +158,26 @@ public class HelperCar extends HelperBase {
         clearTextBox(By.id("dates"));
         click(By.id("dates"));
         LocalDate now = LocalDate.now();
-        LocalDate from = LocalDate.parse(dateFrom,DateTimeFormatter.ofPattern("M/d/yyyy"));
-        LocalDate to = LocalDate.parse(dateTo,DateTimeFormatter.ofPattern("M/d/yyyy"));
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
         int diffYear;
         int diffMonth;
         ///***from
-        diffYear = from.getYear()-now.getYear();
-        if (diffYear==0){
-            diffMonth = from.getMonthValue()-now.getMonthValue();
-        }else {
-            diffMonth = 12-now.getMonthValue()+from.getMonthValue();
+        diffYear = from.getYear() - now.getYear();
+        if (diffYear == 0) {
+            diffMonth = from.getMonthValue() - now.getMonthValue();
+        } else {
+            diffMonth = 12 - now.getMonthValue() + from.getMonthValue();
         }
         clickNextMonth(diffMonth);
         String locator = String.format("//div[text() = ' %s ']", from.getDayOfMonth());
         click(By.xpath(locator));
 
         ///***to
-        diffYear = to.getYear()-from.getYear();
-        if(diffYear==0){
-            diffMonth = to.getMonthValue()-from.getMonthValue();
-        }else {
+        diffYear = to.getYear() - from.getYear();
+        if (diffYear == 0) {
+            diffMonth = to.getMonthValue() - from.getMonthValue();
+        } else {
             diffMonth = 12 - from.getMonthValue() + to.getMonthValue();
         }
         clickNextMonth(diffMonth);
@@ -187,6 +189,21 @@ public class HelperCar extends HelperBase {
         click(By.cssSelector("a.logo"));
     }
 
+    //***********Negative test searchAnyPeriod *************
+
+    public void negativeAnyPeriod(String city, String dateFrom, String dateTo) {
+        clearTextBox(By.id("city"));
+        typeCity(city);
+
+        WebElement datesInput = wd.findElement(By.id("dates"));
+        datesInput.clear();
+        datesInput.sendKeys(dateFrom + " - " + dateTo);
+
+    }
+
+    public String getErrorText() {
+        return wd.findElement(By.cssSelector("div.error")).getText();
+    }
 
 }
 
